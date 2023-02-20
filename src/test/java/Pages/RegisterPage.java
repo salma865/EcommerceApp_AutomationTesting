@@ -1,5 +1,6 @@
 package Pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -11,6 +12,14 @@ public class RegisterPage {
     public RegisterPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver,this);
+    }
+
+    public void navigation(){
+        driver.navigate().to("https://demo.nopcommerce.com/");
+    }
+
+    public void click_register(){
+        driver.findElement(By.className("ico-register")).click();
     }
 
     public void enterRegistrationData(String FName , String LName , String B_day , String B_month , String B_year , String E_mail , String Password , String ConfirmPassword){
@@ -33,5 +42,17 @@ public class RegisterPage {
         driver.findElement(By.id("Password")).sendKeys(Password);
         //Confirm Password
         driver.findElement(By.id("ConfirmPassword")).sendKeys(ConfirmPassword);
+    }
+
+    public void click_reg_button(){
+        driver.findElement(By.id("register-button")).click();
+    }
+
+    public void validation() throws InterruptedException {
+        String expectedResult = "Your registration completed";
+        String actualResult = driver.findElement(By.className("result")).getText();
+        Assert.assertTrue(actualResult.contains(expectedResult));
+        Thread.sleep(1000);
+        driver.quit();
     }
 }

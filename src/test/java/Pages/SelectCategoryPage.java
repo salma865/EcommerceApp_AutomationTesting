@@ -50,9 +50,11 @@ public class SelectCategoryPage {
         }
     }
 
-    public void validation(){
+    public void validation() throws InterruptedException {
         //page title
         String actualResult = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[1]/h1")).getText();
         Assert.assertTrue(actualResult.contains(category));
+        Thread.sleep(1000);
+        driver.quit();
     }
 }

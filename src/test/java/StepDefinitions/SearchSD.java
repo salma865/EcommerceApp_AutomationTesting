@@ -6,8 +6,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -24,16 +22,14 @@ public class SearchSD {
         driver.manage().window().maximize();
         P1 = new SearchPage(driver);
         L1 = new LoginPage(driver);
-        driver.navigate().to("https://demo.nopcommerce.com/");
-        driver.findElement(By.className("ico-login")).click();
+        L1.click_login();
         Thread.sleep(2000);
     }
 
     @And("user enter his email and password and login successfully")
     public void userEnterHisEmailAndPasswordAndLoginSuccessfully() throws InterruptedException {
         L1.Login("newuser@gmail.com","208010");
-        driver.findElement(By.className("login-button")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains("https://demo.nopcommerce.com/"));
+        L1.click_login_button();
         Thread.sleep(2000);
     }
 
@@ -45,11 +41,7 @@ public class SearchSD {
 
     @Then("search completed successfully")
     public void searchCompletedSuccessfully() throws InterruptedException {
-        String expectedResult = "https://demo.nopcommerce.com/search?q=Apple+iCam";
-        String actualResult = driver.getCurrentUrl();
-        Assert.assertTrue(actualResult.contains(expectedResult));
-        Thread.sleep(1000);
-        driver.quit();
+        P1.validate_search();
     }
 
 }

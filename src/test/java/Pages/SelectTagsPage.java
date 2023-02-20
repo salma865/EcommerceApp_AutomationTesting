@@ -19,11 +19,19 @@ public class SelectTagsPage {
         }
     }
 
-    public void validation(String tagName){
+    public void validate_search(){
+        String expectedResult = "https://demo.nopcommerce.com/search?q=Vintage+Style+Engagement+Ring";
+        String actualResult = driver.getCurrentUrl();
+        Assert.assertTrue(actualResult.contains(expectedResult));
+    }
+
+    public void validation(String tagName) throws InterruptedException {
         if(tagName.contains("awesome")) {
             String expectedResult = "Products tagged with 'awesome'";
             String actualResult = driver.findElement(By.className("page-title")).getText();
             Assert.assertTrue(actualResult.contains(expectedResult));
+            Thread.sleep(1000);
+            driver.quit();
         }
     }
 }

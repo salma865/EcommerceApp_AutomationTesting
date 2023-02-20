@@ -1,13 +1,10 @@
 package StepDefinitions;
 
 import Pages.RegisterPage;
-import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -16,7 +13,7 @@ public class RegisterSD {
     RegisterPage r1 ;
 
     @Given("browser opened to register")
-    public void browserOpenedToRegister() throws InterruptedException {
+    public void browserOpenedToRegister(){
         String path = System.getProperty("user.dir")+"\\src\\main\\resources\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver",path);
         driver = new ChromeDriver();
@@ -26,14 +23,14 @@ public class RegisterSD {
 
     @And("website opened to register")
     public void websiteOpenedToRegister() throws InterruptedException {
-        driver.navigate().to("https://demo.nopcommerce.com/");
+        r1.navigation();
         Thread.sleep(2000);
 
     }
 
     @And("user navigate to registration page")
     public void userNavigateToRegistrationPage(){
-        driver.findElement(By.className("ico-register")).click();
+        r1.click_register();
     }
 
     @When("user enter valid data")
@@ -43,17 +40,13 @@ public class RegisterSD {
 
     @And("user click on register button")
     public void userClickOnRegisterButton() throws InterruptedException {
-        driver.findElement(By.id("register-button")).click();
+        r1.click_reg_button();
         Thread.sleep(2000);
     }
 
     @Then("user are registered successfully")
     public void userAreRegisteredSuccessfully() throws InterruptedException {
-        String expectedResult = "Your registration completed";
-        String actualResult = driver.findElement(By.className("result")).getText();
-        Assert.assertTrue(actualResult.contains(expectedResult));
-        Thread.sleep(1000);
-        driver.quit();
+        r1.validation();
     }
 
 }

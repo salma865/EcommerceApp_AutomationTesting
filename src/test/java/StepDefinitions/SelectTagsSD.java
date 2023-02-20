@@ -28,12 +28,9 @@ public class SelectTagsSD {
         L1 = new LoginPage(driver);
         P1 = new SearchPage(driver);
         S1 = new SelectTagsPage(driver);
-        driver.navigate().to("https://demo.nopcommerce.com/");
-        driver.findElement(By.className("ico-login")).click();
-        Thread.sleep(1000);
+        L1.click_login();
         L1.Login("newuser@gmail.com","208010");
-        driver.findElement(By.className("login-button")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains("https://demo.nopcommerce.com/"));
+        L1.click_login_button();
         Thread.sleep(1000);
     }
 
@@ -45,9 +42,7 @@ public class SelectTagsSD {
 
     @And("search results appear")
     public void searchResultsAppear(){
-        String expectedResult = "https://demo.nopcommerce.com/search?q=Vintage+Style+Engagement+Ring";
-        String actualResult = driver.getCurrentUrl();
-        Assert.assertTrue(actualResult.contains(expectedResult));
+        S1.validate_search();
     }
 
     @When("^user select \"(.*)\" tag$")
@@ -59,7 +54,5 @@ public class SelectTagsSD {
     @Then("^validate selecting \"(.*)\" tag$")
     public void validateSelectingTags(String tag) throws InterruptedException {
         S1.validation(tag);
-        Thread.sleep(1000);
-        driver.quit();
     }
 }

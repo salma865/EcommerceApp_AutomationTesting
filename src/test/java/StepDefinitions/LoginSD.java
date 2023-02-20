@@ -5,9 +5,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.bytebuddy.build.Plugin;
-import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -22,8 +19,7 @@ public class LoginSD {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         L1 = new LoginPage(driver);
-        driver.navigate().to("https://demo.nopcommerce.com/");
-        driver.findElement(By.className("ico-login")).click();
+        L1.click_login();
         Thread.sleep(2000);
     }
 
@@ -34,17 +30,13 @@ public class LoginSD {
 
     @And("user click login button")
     public void userClickLoginButton() throws InterruptedException {
-        driver.findElement(By.className("login-button")).click();
+        L1.click_login_button();
         Thread.sleep(2000);
     }
 
     @Then("user could login")
     public void userCouldLogin() throws InterruptedException {
-        String expected =  "https://demo.nopcommerce.com/";
-        String actual = driver.getCurrentUrl();
-        Assert.assertEquals(actual,expected);
-        Thread.sleep(2000);
-        driver.quit();
+        L1.validate_SC1();
     }
 
     @When("user enter invalid email and password")
@@ -54,11 +46,7 @@ public class LoginSD {
 
     @Then("user couldn't login")
     public void userCouldNotLogin() throws InterruptedException {
-        String expectedResult = "Login was unsuccessful. Please correct the errors and try again.";
-        String actualResult = driver.findElement(By.className("message-error")).getText();
-        Assert.assertTrue(actualResult.contains(expectedResult));
-        Thread.sleep(2000);
-        driver.quit();
+        L1.validate_SC2();
     }
 
 }

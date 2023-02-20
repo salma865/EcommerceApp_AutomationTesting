@@ -13,14 +13,22 @@ public class AddToWishlistPage {
         PageFactory.initElements(driver,this);
     }
 
+    public void validate_search(){
+        String expectedResult = "https://demo.nopcommerce.com/search?q=Ray+Ban+Aviator+Sunglasses";
+        String actualResult = driver.getCurrentUrl();
+        Assert.assertTrue(actualResult.contains(expectedResult));
+    }
+
     public void addToWishlist(){
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[2]/div/div[2]/div[3]/div/div[2]/div/div/div/div/div[2]/div[3]/div[2]/button[3]")).click();
     }
 
-    public void checkWishlist(){
+    public void checkWishlist() throws InterruptedException {
         driver.findElement(By.className("wishlist-label")).click();
         String expected = "Ray Ban Aviator Sunglasses";
         String productName = driver.findElement(By.className("product-name")).getText();
         Assert.assertTrue(productName.contains(expected));
+        Thread.sleep(1000);
+        driver.quit();
     }
 }

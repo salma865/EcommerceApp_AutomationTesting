@@ -27,11 +27,9 @@ public class SwitchCurrenciesSD {
         S1 = new SwitchCurrenciesPage(driver);
         P1 = new SearchPage(driver);
         L1 = new LoginPage(driver);
-        driver.navigate().to("https://demo.nopcommerce.com/");
-        driver.findElement(By.className("ico-login")).click();
+        L1.click_login();
         L1.Login("newuser@gmail.com","208010");
-        driver.findElement(By.className("login-button")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains("https://demo.nopcommerce.com/"));
+        L1.click_login_button();
         Thread.sleep(2000);
     }
 
@@ -39,9 +37,6 @@ public class SwitchCurrenciesSD {
     public void userSearch(String word) throws InterruptedException {
         P1.search(word);
         Thread.sleep(2000);
-        String expectedResult = "https://demo.nopcommerce.com/search?q=Apple+iCam";
-        String actualResult = driver.getCurrentUrl();
-        Assert.assertTrue(actualResult.contains(expectedResult));
     }
 
     @When("user switch to Euro")
@@ -52,11 +47,7 @@ public class SwitchCurrenciesSD {
 
     @Then("currency is Euro")
     public void currencyIsEuro() throws InterruptedException {
-        String expectedResult = "€";
-        String actualResult = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[2]/div/div[2]/div[3]/div/div[2]/div/div/div/div/div[2]/div[3]/div[1]/span")).getText();
-        Assert.assertTrue(actualResult.contains(expectedResult));
-        Thread.sleep(1000);
-        driver.quit();
+        S1.validateCurrencyIsEuro();
     }
 
     @When("user switch to US")
@@ -67,10 +58,6 @@ public class SwitchCurrenciesSD {
 
     @Then("currency is US")
     public void currencyIsUS() throws InterruptedException {
-        String expectedResult = "$";
-        String actualResult = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[2]/div/div[2]/div[3]/div/div[2]/div/div/div/div/div[2]/div[3]/div[1]/span")).getText();
-        Assert.assertTrue(actualResult.contains(expectedResult));
-        Thread.sleep(1000);
-        driver.quit();
+        S1.validateCurrencyIsUS();
     }
 }
